@@ -16,7 +16,7 @@ public class Main {
             }
 
             public void type() {
-                System.out.println("A basic, generic cupcake, with vanilla frosting");
+                System.out.println("A basic, generic cupcake, with vanilla frosting.");
             }
         }
         class RedVelvet extends Cupcake {
@@ -30,7 +30,7 @@ public class Main {
             }
         }
 
-        List<Object> cupcakeMenu = new ArrayList<>();
+        List<Cupcake> cupcakeMenu = new ArrayList<>();
 
         Cupcake cupcake = new Cupcake();
         RedVelvet redVelvet = new RedVelvet();
@@ -67,5 +67,65 @@ public class Main {
         cupcakeMenu.add(cupcake);
         cupcakeMenu.add(redVelvet);
         cupcakeMenu.add(chocolate);
+
+        class Drink {
+            public double price;
+
+            public double getPrice() {
+                return price;
+            }
+
+            public void setPrice(double price) {
+                this.price = price;
+            }
+
+            public void type() {
+                System.out.println("A bottle of water.");
+            }
+        }
+        class Soda extends Drink {
+            public void type() {
+                System.out.println("A bottle of soda.");
+            }
+        }
+        class Milk extends Drink {
+            public void type() {
+                System.out.println("A bottle of milk.");
+            }
+        }
+        List<Drink> drinkMenu = new ArrayList<>();
+        Drink water = new Drink();
+        Soda soda = new Soda();
+        Milk milk = new Milk();
+
+        System.out.println("We are in the middle of creating the drink menu.\nWe currently have three drinks on the menu but we need to decide on pricing.");
+
+        //Setting price for water
+        System.out.println("We are deciding on the price for our bottled water. Here is the description:");
+        water.type();
+        System.out.println("How much would you like to charge for the bottle of water?\n(Input a numerical number taken to 2 decimal places)");
+        priceText = input.nextLine();
+        price = Double.parseDouble(priceText);
+        water.setPrice(price);
+
+        //Setting price for soda
+        System.out.println("We are deciding on the price for our bottle of soda. Here is the description:");
+        soda.type();
+        System.out.println("How much would you like to charge for the bottle of soda?\n(Input a numerical number taken to 2 decimal places)");
+        priceText = input.nextLine();
+        price = Double.parseDouble(priceText);
+        soda.setPrice(price);
+
+        //Setting price for milk
+        System.out.println("We are deciding on the price for our bottle of milk. Here is the description:");
+        milk.type();
+        System.out.println("How much would you like to charge for the bottle of milk?\n(Input a numerical number taken to 2 decimal places)");
+        priceText = input.nextLine();
+        price = Double.parseDouble(priceText);
+        milk.setPrice(price);
+
+        drinkMenu.add(water);
+        drinkMenu.add(soda);
+        drinkMenu.add(milk);
     }
 }
