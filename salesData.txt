@@ -1,0 +1,14 @@
+RECEIPT:
+
+Date: 2023-06-10
+Time: 17:38:48.503604
+
+Item: RedVelvet cupcake
+Price: $3.0
+Item: Chocolate cupcake
+Price: $4.5
+Item: Milk
+Price: $1.7
+
+Order Total: $9.2
+___________________________________

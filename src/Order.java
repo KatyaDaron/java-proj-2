@@ -100,7 +100,7 @@ public class Order {
             System.out.println("Your order total is $" + subtotal + "\n");
 
             new CreateFile();
-            new WriteToFile(order);
+            new WriteToFile(order, subtotal);
         } else {
             System.out.println("Have a nice day then.");
         }
@@ -123,13 +123,41 @@ class CreateFile {
 }
 
 class WriteToFile {
-    public WriteToFile(ArrayList<Object> order) {
+    public WriteToFile(ArrayList<Object> order, double subtotal) {
         try {
             FileWriter fw = new FileWriter("salesData.txt", true);
             PrintWriter salesWriter = new PrintWriter(fw);
-            for (int i = 0; i < order.size(); i++) {
-                salesWriter.println(order.get(i));
+
+            LocalDate date = (LocalDate) order.get(0);
+            LocalTime time = (LocalTime) order.get(1);
+
+            salesWriter.println("RECEIPT:\n");
+            salesWriter.println("Date: " + date);
+            salesWriter.println("Time: " + time + "\n");
+
+            for (int i = 2; i < order.size(); i++) {
+                Object item = order.get(i);
+                if (item instanceof Cupcake) {
+                    Cupcake cupcake = (Cupcake) item;
+                    if (cupcake.getClass().getSimpleName().equals("Cupcake")) {
+                        salesWriter.println("Item: Classic cupcake");
+                    } else {
+                        salesWriter.println("Item: " + cupcake.getClass().getSimpleName() + " cupcake");
+                    }
+                    salesWriter.println("Price: $" + cupcake.getPrice());
+                } else if (item instanceof Drink) {
+                    Drink drink = (Drink) item;
+                    if (drink.getClass().getSimpleName().equals("Drink")) {
+                        salesWriter.println("Item: Water");
+                    } else {
+                        salesWriter.println("Item: " + drink.getClass().getSimpleName());
+                    }
+                    salesWriter.println("Price: $" + drink.getPrice());
+                }
             }
+
+            salesWriter.println("\nOrder Total: $" + subtotal);
+            salesWriter.println("___________________________________");
 
             salesWriter.close();
 
