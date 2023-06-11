@@ -1,0 +1,75 @@
+DROP table if exists transactions;
+DROP table if exists customer;
+DROP table if exists product;
+
+CREATE table customer (
+    customer_id serial primary key,
+    first_name varchar(25),
+    last_name varchar(25),
+    email text,
+    phone integer
+);
+
+INSERT into customer (first_name, last_name, email, phone)
+VALUES ('Brandon', 'Smith', 'brandon_smith@gmail.com', 21223301),
+('Sarah', 'Wilson', 'sarah_wilson@gmail.com', 91733320);
+
+SELECT first_name from customer;
+
+SELECT * from customer;
+
+CREATE table product (
+    product_id serial primary key,
+    brand varchar(25),
+    model varchar(25),
+    description text,
+    price integer,
+    quantity integer
+);
+
+INSERT into product (brand, model, description, price, quantity)
+VALUES ('Gazelle', 'Ultimate T10 2023', 'The Gazelle Ultimate T10 HMB is a top-of-the-range trekking e-bike that has been refined down to the last detail. This e-bike delivers highly sporting performance.', 4499, 10),
+('Riese & Muller', 'Roadster Mixte', 'The Riese & Muller Roadster Mixte was made to tackle fast-paced city life. Its optimum weight distribution makes it extremely agile and safe to handle.', 5669, 25);
+
+SELECT * from product;
+
+CREATE table transactions (
+    transaction_id serial primary key,
+    customer_id integer references customer(customer_id),
+    product_id integer references product(product_id),
+    date text
+);
+
+INSERT into transactions (customer_id, product_id, date)
+VALUES (1, 1, '06-10-2023'),
+(1, 2, '05-27-2022'),
+(2, 2, '06-11-2023');
+
+SELECT * from transactions;
+
+UPDATE product
+SET quantity = quantity - (
+    SELECT COUNT(*)
+    FROM transactions
+    WHERE transactions.product_id = product.product_id
+)
+WHERE product_id IN (
+    SELECT product_id
+    FROM transactions
+);
+
+SELECT * from transactions
+ORDER BY date DESC;
+
+SELECT * from customer
+WHERE first_name LIKE 'B%';
+
+SELECT date from transactions
+ORDER BY date DESC
+LIMIT 2;
+
+INSERT into customer (first_name, last_name, email, phone)
+VALUES ('Michelle', 'Brown', 'michelle_brown@gmail.com', 92932240);
+
+DELETE from transactions
+WHERE customer_id = 2;
